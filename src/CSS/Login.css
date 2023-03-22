@@ -1,0 +1,98 @@
+body {
+  background-color: var(--Background);
+  min-height: 100vh;
+}
+.login {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 5rem 0rem; */
+  background-color: var(--Background);
+}
+.login a {
+  text-decoration: none;
+  color: var(--Text);
+}
+.heading {
+  width: 100%;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.title {
+  /* background-color: aqua; */
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+}
+
+.form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.form .form-group {
+  width: 50%;
+  /* background-color: red; */
+  margin: 1rem 0rem;
+}
+.form .form-group input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--Text);
+  outline: none;
+  text-indent: 1rem;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.form-group label {
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+.btn {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  background-color: var(--Text);
+  border: 1px solid var(--Text);
+  color: var(--Background);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn a {
+  color: var(--Background);
+}
+.btn:hover {
+  background-color: var(--Btn);
+}
+.line {
+  width: 50%;
+  margin: 1rem 0rem;
+  border-bottom: 1px solid var(--Text);
+}
+
+@media screen and (max-width: 767px) {
+  .form .form-group {
+    width: 90%;
+  }
+  .line {
+    width: 90%;
+    margin: 1rem 0rem;
+    border-bottom: 1px solid var(--Text);
+  }
+}

@@ -1,0 +1,62 @@
+.footer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  color: var(--Background);
+  background-color: var(--Text);
+  padding: 1rem 0rem;
+}
+.footer .logo {
+  top: 10;
+  width: auto;
+  list-style: none;
+  color: var(--Background);
+}
+
+.footer a {
+  text-decoration: none;
+}
+.footer-links {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0rem 0rem;
+}
+.footer-link {
+  width: 100%;
+  color: var(--Background);
+  margin: 0.5rem 0rem;
+  padding: 0.5rem;
+  /* background-color: aquamarine; */
+}
+
+@media screen and (max-width: 767px) {
+  .footer {
+    display: grid;
+    grid-template-columns: repeat(3, 0.5fr);
+    grid-template-rows: 0.5fr repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+
+  .footer .logo {
+    height: 50px;
+    grid-area: 1 / 1 / 2 / 4;
+    text-align: center;
+    /* background-color: aqua; */
+  }
+  .footer div {
+    margin: 0rem 0.5rem;
+  }
+  .aboutUs {
+    grid-area: 2 / 1 / 4 / 2;
+  }
+  .connect {
+    grid-area: 2 / 2 / 4 / 3;
+  }
+  .makemoney {
+    grid-area: 2 / 3 / 4 / 4;
+  }
+}
