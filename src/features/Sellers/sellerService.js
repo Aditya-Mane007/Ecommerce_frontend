@@ -25,16 +25,33 @@ const logout = async () => {
 
 // Get All PRoducts
 const getProducts = async (token) => {
-  const response = await axios.get(API_URL + "products")
-  return response.data
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get("http://localhost:5000/api/sellers/product",config)
+
+  return response.data.products
 }
 
+const createProducts = async (productData,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.post("http://localhost:5000/api/sellers/product/add",productData,config)
+
+  return response.data.products
+}
 
 const sellerService = {
   register,
   login,
   logout,
-  getProducts
+  getProducts,
+  createProducts
 }
 
 export default sellerService
