@@ -11,8 +11,8 @@ const App = () => {
         <div className="container">
           <Pages />
         </div>
+        <ToastContainer />
       </Router>
-      <ToastContainer />
     </>
   )
 }

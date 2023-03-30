@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react"
-import {
-  AiOutlineShoppingCart,
-  AiOutlineUser,
-  AiOutlineClose
-} from "react-icons/ai"
-import { GiHamburger, GiHamburgerMenu } from "react-icons/gi"
+import { AiOutlineUser, AiOutlineClose } from "react-icons/ai"
+import { GiHamburgerMenu } from "react-icons/gi"
+import { BiNotepad } from "react-icons/bi"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -22,13 +19,15 @@ const SellerNavbar = () => {
     if (isError) {
       toast.error(message)
     }
-    if (!seller || isSuccess) {
+    if (!seller) {
       navigate("/seller/login")
     }
-  }, [seller])
+  }, [seller, isSuccess, isError, message, navigate, dispatch])
   return (
     <div className="navbar">
-      <div className="logo">Ecommerce Seller</div>
+      <div className="logo">
+        <Link to="/seller/home">Ecommerce Seller</Link>
+      </div>
       <ul
         className={
           isClosed ? `nav-links scale-up-hor-right active` : "nav-links"
@@ -48,6 +47,30 @@ const SellerNavbar = () => {
               }}
             >
               Logout
+            </li>
+            <li
+              className="nav-link btn"
+              style={{
+                margin: "0rem .5rem",
+                fontSize: "20px",
+                border: "1px solid #f8f9fa"
+              }}
+            >
+              <Link to="/seller/home/add">Add Product</Link>
+            </li>
+            <li
+              className="nav-link"
+              style={{ margin: "0rem .5rem", fontSize: "20px", border: "none" }}
+            >
+              <BiNotepad
+                className="icon"
+                style={{
+                  margin: "0rem .5rem",
+                  fontSize: "20px",
+                  alignItems: "center"
+                }}
+              />
+              Orders
             </li>
             <li
               className="nav-link"

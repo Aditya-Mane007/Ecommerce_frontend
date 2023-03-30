@@ -35,6 +35,17 @@ const getProducts = async (token) => {
   return response.data.products
 }
 
+const getProduct = async (id,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(`http://localhost:5000/api/sellers/product/${id}`,config)
+
+  return response.data.product
+}
+
 const createProducts = async (productData,token) => {
   const config = {
     headers: {
@@ -46,12 +57,38 @@ const createProducts = async (productData,token) => {
   return response.data.products
 }
 
+
+const updateProduct = async (productData,id,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.put(`http://localhost:5000/api/sellers/product/${id}`,productData,config)
+
+  return response.data
+}
+
+const deleteProduct = async (id,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.delete(`http://localhost:5000/api/sellers/product/${id}`,config)
+
+  return response.data
+}
+
 const sellerService = {
   register,
   login,
   logout,
   getProducts,
-  createProducts
+  getProduct,
+  createProducts,
+  updateProduct,
+  deleteProduct
 }
 
 export default sellerService

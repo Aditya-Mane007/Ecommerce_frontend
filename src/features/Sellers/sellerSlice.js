@@ -6,6 +6,7 @@ const seller = JSON.parse(localStorage.getItem("Seller"))
 const initialState = {
   seller: seller ? seller : null,
   products: [],
+  product: [],
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -66,6 +67,21 @@ export const getProducts = createAsyncThunk("seller/getAll",async (_,thunkAPI) =
     return thunkAPI.rejectWithValue(message)
   }
 })
+// Get Product
+export const getProduct = createAsyncThunk("seller/getOne",async (id,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().seller.seller.token
+    return await sellerService.getProduct(id,token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.message &&
+        error.response.message.data) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 // Create Product
 export const createProducts = createAsyncThunk("seller/create",async (productData,thunkAPI) => {
@@ -82,7 +98,37 @@ export const createProducts = createAsyncThunk("seller/create",async (productDat
     return thunkAPI.rejectWithValue(message)
   }
 })
+// updateProduct
+export const updateProduct = createAsyncThunk("seller/update",async (productData,id,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().seller.seller.token
+    return await sellerService.updateProduct(productData,id,token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.message &&
+        error.response.message.data) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
+// Delete Product
+export const deleteProduct = createAsyncThunk("seller/delete",async (id,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().seller.seller.token
+    return await sellerService.deleteProduct(id,token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.message &&
+        error.response.message.data) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const sellerSlice = createSlice({
   name: "seller",
@@ -148,6 +194,21 @@ export const sellerSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(getProduct.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(getProduct.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.isError = false
+        state.product = action.payload
+      })
+      .addCase(getProduct.rejected,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(createProducts.pending,(state) => {
         state.isLoading = true
       })
@@ -158,6 +219,36 @@ export const sellerSlice = createSlice({
         state.products.push(action.payload)
       })
       .addCase(createProducts.rejected,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateProduct.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(updateProduct.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.isError = false
+        state.product = action.payload
+      })
+      .addCase(updateProduct.rejected,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteProduct.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteProduct.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.isError = false
+        state.products.filter((product) => product.id !== action.payload.id)
+      })
+      .addCase(deleteProduct.rejected,(state,action) => {
         state.isLoading = false
         state.isSuccess = false
         state.isError = true

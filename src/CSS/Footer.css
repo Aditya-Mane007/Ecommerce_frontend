@@ -1,11 +1,12 @@
 .footer {
+  position: sticky;
   width: 100%;
   height: auto;
   display: flex;
   justify-content: space-around;
   color: var(--Background);
   background-color: var(--Text);
-  padding: 1rem 0rem;
+  padding: 2rem 0rem;
 }
 .footer .logo {
   top: 10;

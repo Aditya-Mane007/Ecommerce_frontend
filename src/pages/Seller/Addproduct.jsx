@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { createProducts } from "../../features/Sellers/sellerSlice"
 import SellerNavbar from "./SellerNavbar"
 
@@ -9,11 +9,12 @@ const Addproduct = () => {
     name: "",
     description: "",
     price: "",
-    image: "",
-    quantity: ""
+    quantity: "",
+    category: ""
   })
+  const [image, setImage] = useState("")
 
-  const { name, description, price, image, quantity } = formData
+  const { name, description, price, quantity, category } = formData
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -23,15 +24,22 @@ const Addproduct = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    const productData = {
-      name,
-      description,
-      price,
-      image,
-      quantity
-    }
-    dispatch(createProducts(productData))
-    setFormData("")
+    const formData = new FormData()
+    formData.append("name", name)
+    formData.append("description", description)
+    formData.append("price", price)
+    formData.append("image", image)
+    formData.append("quantity", quantity)
+    formData.append("category", category)
+
+    dispatch(createProducts(formData))
+    setFormData({
+      name: "",
+      description: "",
+      price: "",
+      quantity: "",
+      category: ""
+    })
   }
 
   return (
@@ -45,39 +53,54 @@ const Addproduct = () => {
           <input type="text" name="name" id="name" onChange={onChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="desc">Description</label>
-          <textarea
-            name="desc"
-            id="desc"
-            cols="30"
-            rows="10"
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            name="description"
+            id="description"
             onChange={onChange}
-          ></textarea>
+          />
         </div>
         <div className="form-group">
           <label htmlFor="price">Price</label>
           <input type="text" name="price" id="price" onChange={onChange} />
         </div>
         <div className="form-group">
-          <label htmlFor="images" className="drop-container">
+          <label htmlFor="image" className="drop-container">
             <span className="drop-title">Drop files here</span>
             or
             <input
               type="file"
-              name="images"
-              id="images"
+              name="image"
+              id="image"
               multiple={true}
-              className="images"
+              className="image"
               accept="image/*"
               required
               style={{ border: "none" }}
-              onChange={onChange}
+              onChange={(e) => {
+                setImage(e.target.files[0])
+              }}
             />
           </label>
         </div>
         <div className="form-group">
-          <label htmlFor="quntity">Quantity</label>
-          <input type="text" name="quntity" id="quntity" onChange={onChange} />
+          <label htmlFor="quantity">Quantity</label>
+          <input
+            type="text"
+            name="quantity"
+            id="quantity"
+            onChange={onChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            onChange={onChange}
+          />
         </div>
         <div className="form-group">
           <button type="submit" className="btn">
