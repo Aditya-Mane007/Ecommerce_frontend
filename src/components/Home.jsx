@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getProducts } from "../features/Products/productSlice"
+import { getProducts, reset } from "../features/Products/productSlice"
 import Footer from "./Footer"
 import Navbar from "./Navbar"
 import { toast } from "react-toastify"
@@ -15,21 +15,23 @@ const Home = () => {
   )
   const { user } = useSelector((state) => state.user)
 
-  useMemo(() => {
+  useEffect(() => {
     if (isError) {
       toast.error(message)
     }
     if (!user) {
       navigate("/users/login")
     }
+
     dispatch(getProducts())
-  }, [])
+  }, [isSuccess, isError, isLoading, message, dispatch, user, navigate])
 
   return (
     <>
       <header>
         <Navbar />
       </header>
+
       <div className="cards">
         {products.length > 0 ? (
           <Cards products={products} />

@@ -133,7 +133,11 @@ body {
   }
   .btns {
     display: flex;
-    margin: 1rem 0rem;
+    margin: 5rem 0rem;
+  }
+
+  .btns .submit {
+    margin: 5rem 0rem;
   }
 
   .btns .btn {
@@ -142,6 +146,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .btns .quantity {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border: 1px solid black;
+    margin: 0rem 0.5rem;
+    border-radius: 10px;
   }
 }
 
@@ -215,5 +229,43 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .btns .quantity {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border: 1px solid black;
+    margin: 0rem 0.5rem;
+    border-radius: 10px;
+  }
+  .btns .submit {
+    margin: 0rem 0.5rem 0.5rem 0rem;
+  }
+}
+
+.nav-link {
+  position: relative;
+}
+.icon {
+  font-size: 25px;
+}
+.number {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--Background);
+  color: var(--Text);
+  padding: 0.25rem 0rem;
+}
+
+@media screen and (max-width: 767px) {
+  .number {
+    padding: 0rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
 }

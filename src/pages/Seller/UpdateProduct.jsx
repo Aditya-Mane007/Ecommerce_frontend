@@ -48,6 +48,7 @@ const UpdateProduct = () => {
     formData.append("quantity", quantity)
     formData.append("category", category)
 
+    console.log(formData)
     dispatch(updateProduct(formData, product._id))
     // setFormData({
     //   name: "",

@@ -12,15 +12,6 @@ const Home = () => {
   const { products, isError, message, seller } = useSelector(
     (state) => state.seller
   )
-  // useEffect(() => {}, [
-  //   products,
-  //   isError,
-  //   isLoading,
-  //   message,
-  //   dispatch,
-  //   navigate,
-  //   seller
-  // ])
 
   useEffect(() => {
     if (isError) {

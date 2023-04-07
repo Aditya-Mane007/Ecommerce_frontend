@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import {
   AiOutlineShoppingCart,
@@ -9,15 +9,19 @@ import { BiNotepad, BiSearchAlt } from "react-icons/bi"
 import { GiHamburgerMenu } from "react-icons/gi"
 import { useDispatch, useSelector } from "react-redux"
 import "../CSS/Navbar.css"
-import { logout } from "../features/Users/userSlice"
+import { getCart, logout } from "../features/Users/userSlice"
 
 const Navbar = () => {
   const [isClosed, setIsClosed] = useState(true)
-  const { user } = useSelector((state) => state.user)
+  const { user, cart, isSuccess, isError } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
 
   const submitHandler = () => {}
+
+  useEffect(() => {
+    dispatch(getCart())
+  }, [dispatch, isSuccess, isError])
   return (
     <>
       <div className="navbar">
@@ -49,7 +53,14 @@ const Navbar = () => {
           }
         >
           <li className="nav-link">
-            <AiOutlineShoppingCart className="icon" />
+            {cart && cart.length > 0 ? (
+              <div className="number">{cart.length}</div>
+            ) : (
+              ""
+            )}
+            <Link to="/users/cart">
+              <AiOutlineShoppingCart className="icon cartIcon" />
+            </Link>
             Cart
           </li>
           <li className="nav-link">

@@ -5,6 +5,7 @@ const user = JSON.parse(localStorage.getItem("User"))
 
 const initialState = {
   user: user ? user : null,
+  cart: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -52,6 +53,52 @@ export const logout = createAsyncThunk(
   }
 )
 
+// Add To Cart 
+export const addToCart = createAsyncThunk("user/addToCart",async (cartData,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await userService.addToCart(cartData,token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getCart = createAsyncThunk("user/getCart",async (_,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await userService.getCart(token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const deleteCartProduct = createAsyncThunk("user/deleteCartProduct",async (id,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await userService.deleteCartProduct(id,token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -98,6 +145,48 @@ export const userSlice = createSlice({
         state.isSuccess = true
         state.isError = false
         state.user = null
+      })
+      .addCase(addToCart.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(addToCart.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.cart = action.payload
+      })
+      .addCase(addToCart.rejected,(state,action) => {
+        state.isLoading = false
+        state.isError = true
+        state.cart = []
+        state.message = action.payload
+      })
+      .addCase(getCart.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(getCart.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.cart = action.payload
+      })
+      .addCase(getCart.rejected,(state,action) => {
+        state.isLoading = false
+        state.isError = true
+        state.cart = []
+        state.message = action.payload
+      })
+      .addCase(deleteCartProduct.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteCartProduct.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.cart.filter((product) => product._id !== action.payload.id)
+      })
+      .addCase(deleteCartProduct.rejected,(state,action) => {
+        state.isLoading = false
+        state.isError = true
+        state.cart = []
+        state.message = action.payload
       })
   }
 })

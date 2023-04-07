@@ -1,18 +1,14 @@
 import React from "react"
 import { BsCurrencyRupee } from "react-icons/bs"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const Card = ({ product }) => {
-  const navigate = useNavigate()
   return (
-    <div
-      className="card"
-      onClick={() => {
-        navigate(`/product/${product.id}`)
-      }}
-    >
+    <div className="card">
       <div className="image">
-        <img src={product.image.url} alt={product.name} />
+        <Link to={`/product/${product._id}`}>
+          <img src={product.image && product.image.url} alt={product.name} />
+        </Link>
       </div>
       <div className="name">{product.name}</div>
       <div className="decription">{product.description}</div>
@@ -20,6 +16,7 @@ const Card = ({ product }) => {
         <BsCurrencyRupee />
         {product.price}
       </div>
+      <div className="quantity">{product.quantity}</div>
     </div>
   )
 }

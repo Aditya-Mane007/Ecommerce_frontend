@@ -27,7 +27,38 @@ const getProducts = async () => {
   return response.data.products
 }
 
+const getCart = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get("http://localhost:5000/api/users/cart",config)
 
-const userService = { register,login,logout,getProducts }
+  return response.data.products
+}
+
+const addToCart = async (cartData,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.post("http://localhost:5000/api/users/cart/add",cartData,config)
+
+  return response.data.products
+}
+const deleteCartProduct = async (id,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.delete(`http://localhost:5000/api/users/cart/${id}`,config)
+
+  return response.data.products
+}
+
+const userService = { register,login,logout,getProducts,addToCart,getCart,deleteCartProduct }
 
 export default userService
