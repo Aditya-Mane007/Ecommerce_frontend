@@ -20,7 +20,7 @@ const Home = () => {
       toast.error(message)
     }
     if (!user) {
-      navigate("/users/login")
+      navigate("/login")
     }
 
     dispatch(getProducts())

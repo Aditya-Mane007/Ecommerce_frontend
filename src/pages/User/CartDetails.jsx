@@ -4,20 +4,26 @@ import CartCard from "./CartCard"
 import { getCart } from "../../features/Users/userSlice"
 import Navbar from "../../components/Navbar"
 import { toast } from "react-toastify"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const CartDetails = () => {
-  const { cart, isError, isSuccess, message } = useSelector(
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user, cart, isError, isSuccess, message } = useSelector(
     (state) => state.user
   )
-  const dispatch = useDispatch()
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login")
+    }
     if (isError) {
       toast.error(message)
     }
+
     dispatch(getCart())
-  }, [dispatch, isError, isSuccess, message])
+  }, [dispatch, navigate, isError, isSuccess, message])
+
   return (
     <>
       <header>

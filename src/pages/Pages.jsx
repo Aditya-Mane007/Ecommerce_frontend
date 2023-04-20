@@ -8,9 +8,11 @@ import SellerHome from "../pages/Seller/Home"
 import AddProduct from "../pages/Seller/Addproduct"
 import CardDetails from "./Seller/CardDetails"
 import UserCardDetails from "./User/CardDetails"
+
 import { Routes, Route } from "react-router-dom"
 import UpdateProduct from "./Seller/UpdateProduct"
 import CartDetails from "./User/CartDetails"
+import PaymentSuccessPage from "./User/PaymentSuccess"
 
 const Pages = () => {
   return (
@@ -21,6 +23,7 @@ const Pages = () => {
         <Route path="/login" element={<LoginUser />} />
         <Route path="/product/:id" element={<UserCardDetails />} />
         <Route path="/users/cart" element={<CartDetails />} />
+        <Route path="/users/paymentSuccess" element={<PaymentSuccessPage />} />
         {/* SELLER */}
         <Route path="seller/login" element={<LoginSeller />} />
         <Route path="seller/register" element={<RegisterSeller />} />
