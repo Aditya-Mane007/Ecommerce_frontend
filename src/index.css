@@ -269,3 +269,7 @@ body {
     padding-left: 0.25rem;
   }
 }
+
+.checkout-form {
+  display: flex;
+}

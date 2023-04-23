@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 import { updateProduct } from "../../features/Sellers/sellerSlice"
 import { getProduct } from "../../features/Sellers/sellerSlice"
 import SellerNavbar from "./SellerNavbar"
+import FileBase from "react-file-base64"
 
 const UpdateProduct = () => {
   const dispatch = useDispatch()
@@ -21,14 +22,15 @@ const UpdateProduct = () => {
     dispatch(getProduct(params.id))
   }, [params.id, isError, message, navigate, dispatch])
 
+  const [image, setImage] = useState("")
   const [formData, setFormData] = useState({
     name: product.name,
     description: product.description,
     price: product.price,
+    image: product.image,
     quantity: !product.quantity ? 1 : product.quantity,
     category: product.category
   })
-  const [image, setImage] = useState("")
 
   const { name, description, price, quantity, category } = formData
   const onChange = (e) => {
@@ -40,13 +42,15 @@ const UpdateProduct = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    const formData = new FormData()
-    formData.append("name", name)
-    formData.append("description", description)
-    formData.append("price", price)
-    formData.append("image", image)
-    formData.append("quantity", quantity)
-    formData.append("category", category)
+    // const formData = new FormData()
+    // formData.append("name", name)
+    // formData.append("description", description)
+    // formData.append("price", price)
+    // formData.append("image", image)
+    // formData.append("quantity", quantity)
+    // formData.append("category", category)
+
+    // console.log(formData)
 
     console.log(formData)
     dispatch(updateProduct(formData, product._id))
@@ -110,17 +114,10 @@ const UpdateProduct = () => {
           <label htmlFor="image" className="drop-container">
             <span className="drop-title">Drop files here</span>
             or
-            <input
+            <FileBase
               type="file"
-              name="image"
-              id="image"
-              multiple={true}
-              className="image"
-              accept="image/*"
-              style={{ border: "none" }}
-              onChange={(e) => {
-                setImage(e.target.files[0])
-              }}
+              multiple={false}
+              onDone={({ base64 }) => setImage({ selectedFile: base64 })}
             />
           </label>
         </div>

@@ -6,6 +6,7 @@ const user = JSON.parse(localStorage.getItem("User"))
 const initialState = {
   user: user ? user : null,
   cart: [],
+  checkoutCart: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -73,6 +74,20 @@ export const getCart = createAsyncThunk("user/getCart",async (_,thunkAPI) => {
   try {
     const token = thunkAPI.getState().user.user.token
     return await userService.getCart(token)
+  } catch (error) {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const getCartProductDetails = createAsyncThunk("user/getCartProduct",async (id,thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().user.user.token
+    return await userService.getCartProductDetails(id,token)
   } catch (error) {
     const message =
       (error.response &&
@@ -172,6 +187,20 @@ export const userSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.cart = []
+        state.message = action.payload
+      })
+      .addCase(getCartProductDetails.pending,(state) => {
+        state.isLoading = true
+      })
+      .addCase(getCartProductDetails.fulfilled,(state,action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.checkoutCart = action.payload
+      })
+      .addCase(getCartProductDetails.rejected,(state,action) => {
+        state.isLoading = false
+        state.isError = true
+        state.checkoutCart = []
         state.message = action.payload
       })
       .addCase(deleteCartProduct.pending,(state) => {

@@ -33,13 +33,14 @@ const Addproduct = () => {
     formData.append("category", category)
 
     dispatch(createProducts(formData))
-    setFormData({
-      name: "",
-      description: "",
-      price: "",
-      quantity: "",
-      category: ""
-    })
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        quantity: "",
+        category: ""
+      })
+    
   }
 
   return (

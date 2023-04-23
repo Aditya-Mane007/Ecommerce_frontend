@@ -64,9 +64,9 @@ const updateProduct = async (productData,id,token) => {
       Authorization: `Bearer ${token}`,
     },
   }
-  const response = await axios.put(`http://localhost:5000/api/sellers/product/${id}`,productData,config)
+  const response = await axios.put(`http://localhost:5000/api/sellers/product/update/${id}`,productData,config)
 
-  return response.data
+  return response.data.products
 }
 
 const deleteProduct = async (id,token) => {

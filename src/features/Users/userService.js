@@ -37,6 +37,16 @@ const getCart = async (token) => {
 
   return response.data.products
 }
+const getCartProductDetails = async (id,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(`http://localhost:5000/api/users/cart/${id}`,config)
+
+  return response.data.products
+}
 
 const addToCart = async (cartData,token) => {
   const config = {
@@ -59,6 +69,6 @@ const deleteCartProduct = async (id,token) => {
   return response.data.products
 }
 
-const userService = { register,login,logout,getProducts,addToCart,getCart,deleteCartProduct }
+const userService = { register,login,logout,getProducts,addToCart,getCart,getCartProductDetails,deleteCartProduct }
 
 export default userService
